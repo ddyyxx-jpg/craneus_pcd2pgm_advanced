@@ -1,3 +1,5 @@
 tests/out/
 __pycache__/
 *.pyc
+**/__pycache__/
+fusion_mapping/tests/out/

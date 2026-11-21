@@ -6,7 +6,8 @@ on:
   pull_request:
 
 jobs:
-  smoke-test:
+  fusion-smoke-test:
+    name: fusion_mapping (synthetic end-to-end)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,6 +15,19 @@ jobs:
         with:
           python-version: "3.10"
       - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run synthetic end-to-end smoke test
-        run: ./tests/run_smoke_test.sh
+        run: pip install -r fusion_mapping/requirements.txt
+      - name: Run synthetic smoke test
+        run: ./fusion_mapping/tests/run_smoke_test.sh
+
+  clearance-syntax-check:
+    name: clearance_ground_mapping (compile check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: pip install -r clearance_ground_mapping/requirements.txt
+      - name: Byte-compile scripts
+        run: python3 -m py_compile clearance_ground_mapping/scripts/*.py
